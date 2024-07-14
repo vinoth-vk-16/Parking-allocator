@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Parking Space</title>
+    <link rel="icon" href="car-icon.jpg" type="image/x-icon">
+    <style>
+        body {
+            background-image: url(intro.jpg);
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2; /* Light background color */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #bookingContainer {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow with more blur */
+            text-align: center;
+            max-width: 400px; /* Limit the maximum width */
+            width: 100%; /* Take full width on smaller screens */
+            transition: transform 0.3s ease-in-out; /* Add transition effect */
+        }
+
+        #bookingContainer:hover {
+            transform: scale(1.05); /* Scale up on hover */
+        }
+
+        h1 {
+            color: black;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333; /* Dark text color */
+            display: block; /* Display each label on a new line */
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc; /* Light border color */
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4caf50; /* Green */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #bookingStatus {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #4caf50; /* Green */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="bookingContainer">
+        <h1>Book a Parking Space</h1>
+        <form id="bookingForm">
+            <label for="vehicleNumber">Vehicle Number:</label>
+            <input type="text" id="vehicleNumber" name="vehicleNumber" required>
+
+            <label for="vehicleType">Vehicle Type:</label>
+            <select id="vehicleType" name="vehicleType" required>
+                <option value="2-wheeler">2-wheeler</option>
+                <option value="4-wheeler">4-wheeler</option>
+            </select>
+
+            <label for="inTime">In Time:</label>
+            <input type="datetime-local" id="inTime" name="inTime" required>
+
+            <label for="outTime">Out Time:</label>
+            <input type="datetime-local" id="outTime" name="outTime" required>
+
+            <button type="button" onclick="bookParkingSpace()">Book Parking Space</button>
+        </form>
+        <div id="bookingStatus"></div>
+    </div>
+
+    <script>
+        function bookParkingSpace() {
+            // Collect form data
+            const form = document.getElementById("bookingForm");
+            const formData = new FormData(form);
+
+            // Send form data to server using fetch
+            fetch("booking_handler.php", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.text())
+                .then(result => {
+                    document.getElementById("bookingStatus").innerHTML = result;
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    document.getElementById("bookingStatus").innerHTML = "Booking Failed!";
+                });
+        }
+    </script>
+</body>
+
+</html>

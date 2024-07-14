@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Capacity</title>
+    <link rel="icon" href="car-icon.jpg" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('capacity.jpg'); /* Replace 'capacity.jpg' with your actual background image path */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #container {
+            background-color: rgba(236, 237, 243, 0.9); /* Background color with opacity */
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow for the container */
+            text-align: center;
+        }
+
+        h1 {
+            color: black;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .vehicle-section {
+            margin-bottom: 20px;
+        }
+
+        .parking-box {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .remaining-spaces {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Parking Capacity</h1>
+
+        <div class="vehicle-section">
+            <h2>2-Wheeler Parking</h2>
+            <div class="remaining-spaces" id="remaining2WheelerSpaces"></div>
+            <div id="twoWheelerCounts">
+                <!-- Boxes will be dynamically added here -->
+            </div>
+        </div>
+
+        <div class="vehicle-section">
+            <h2>4-Wheeler Parking</h2>
+            <div class="remaining-spaces" id="remaining4WheelerSpaces"></div>
+            <div id="fourWheelerCounts">
+                <!-- Boxes will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to load vehicle counts from parking_capacity.php
+        fetch("parking_capacity.php")
+            .then(response => response.json())
+            .then(data => {
+                displayParkingSpaces(data.remaining2WheelerSpaces, data.remaining4WheelerSpaces);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("remaining2WheelerSpaces").innerHTML = "Failed to load remaining spaces.";
+                document.getElementById("remaining4WheelerSpaces").innerHTML = "Failed to load remaining spaces.";
+            });
+
+        function displayParkingSpaces(remaining2WheelerSpaces, remaining4WheelerSpaces) {
+            const twoWheelerCountsDiv = document.getElementById("twoWheelerCounts");
+            const fourWheelerCountsDiv = document.getElementById("fourWheelerCounts");
+            const remaining2WheelerSpacesDiv = document.getElementById("remaining2WheelerSpaces");
+            const remaining4WheelerSpacesDiv = document.getElementById("remaining4WheelerSpaces");
+
+            // Display the remaining spaces for 2-wheelers
+            remaining2WheelerSpacesDiv.innerHTML = `Remaining Spaces: ${remaining2WheelerSpaces}`;
+
+            // Create and style boxes for 2-wheelers
+            for (let i = 0; i < 40; i++) {
+                const box = document.createElement("div");
+                box.className = "parking-box";
+                box.style.backgroundColor = i < remaining2WheelerSpaces ? "green" : "red";
+                twoWheelerCountsDiv.appendChild(box);
+            }
+
+            // Display the remaining spaces for 4-wheelers
+            remaining4WheelerSpacesDiv.innerHTML = `Remaining Spaces: ${remaining4WheelerSpaces}`;
+
+            // Create and style boxes for 4-wheelers
+            for (let i = 0; i < 30; i++) {
+                const box = document.createElement("div");
+                box.className = "parking-box";
+                box.style.backgroundColor = i < remaining4WheelerSpaces ? "green" : "red";
+                fourWheelerCountsDiv.appendChild(box);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME PAGE</title>
+    <link rel="icon" href="car-icon.jpg" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('INT.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 55px;
+            margin-bottom: 20px;
+            font-family: "Brush Script MT", cursive;; /* Specify a different font for h1 */
+            color: #b9af84; /* Set a custom color for h1 */
+        }
+
+        p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            max-width: 80%;
+            font-family: "Times New Roman", serif; /* Specify a different font for p */
+            color: #ffffff; /* Set a custom color for p */
+        }
+
+        .explore {
+            font-size: 24px;
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            font-family: "Courier New", monospace; /* Specify a different font for .explore */
+        }
+
+        .explore:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay">
+        <h1>Simplify Your Parking Experience</h1>
+        <p>Efficient parking solutions for stress-free convenience. Experience hassle-free parking with ParkEasee.</p>
+        <a class="explore" href="login.html">Explore</a>
+    </div>
+</body>
+
+</html>

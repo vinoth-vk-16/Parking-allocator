@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Parking Amount</title>
+    <link rel="icon" href="car-icon.jpg" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url(park.jpg);
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .container {
+            background-color: rgba(79, 81, 92, 0.9);
+            padding: 60px;
+            border-radius: 30px;
+            margin-right: 650px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label,
+        input,
+        button {
+            margin-bottom: 20px;
+            font-size: 25px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f8f8f8;
+        }
+
+        button {
+            background-color: #595595;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #000000;
+        }
+
+        
+        #result {
+            font-size: 20px;
+            color: white; 
+            margin-top: 20px; 
+        }
+    </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Calculate Parking Amount</h1>
+    <form id="parkingForm">
+        <label for="vehicleNumber">Vehicle Number:</label>
+        <input type="text" id="vehicleNumber" name="vehicleNumber" required><br>
+        <button type="submit">Calculate Amount</button>
+    </form>
+    <div id="result"></div>
+</div>
+
+<script>
+    document.getElementById("parkingForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var vehicleNumber = document.getElementById("vehicleNumber").value;
+
+        fetch("calculate_amount.php", {
+            method: "POST",
+            body: new URLSearchParams("vehicleNumber=" + vehicleNumber),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        })
+        .then(response => response.text()) 
+        .then(data => {
+            
+            document.getElementById("result").innerHTML = data;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            document.getElementById("result").innerHTML = "Failed to calculate parking amount.";
+        });
+    });
+</script>
+</body>
+
+</html>
